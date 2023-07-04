@@ -44,7 +44,7 @@ GOODCOMMENTS = [
     'q joya acabo de ver',
     'No puedo creer q existan este tipio de peliculas!',
     'Buena',
-    'Interesenta',
+    'Interesante',
     'Captiva',
     'Entretenida',
     'Mucha accion!',

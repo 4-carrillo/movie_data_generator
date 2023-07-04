@@ -21,6 +21,9 @@ from pandas import (
 from src.date.random_date import(
     random_date
 )
+from src.datamodels.models import dataOut
+#from pydantic import Json
+from typing import List
 from fastapi import FastAPI
 import uvicorn
 
@@ -47,10 +50,32 @@ async def root():
         "/data",
         status_code=200
 )
-async def generate_random_samples():
+async def generate_random_samples() -> List[dataOut]:
 
     """
-    Endpoint for generating movie data
+    Endpoint for generating movie data \n
+
+    Args: \n
+        None
+    Output: \n
+        List[Dict]: JSON list with the following schema 
+
+        [
+            {
+                'userid': int,
+                'age': int,
+                'title': string,
+                'genres': string,
+                'rating': float,
+                'commentary': string,
+                'date': string
+            },
+            {...},
+            .
+            .
+            .
+            {...}
+        ]
     """
 
     moviesRandom = movies.sample(n = REGISTRES, replace = True)
@@ -60,7 +85,7 @@ async def generate_random_samples():
     ages = randint(18, 60, size=REGISTRES)
     rating = [round(x,1) for x in uniform(1, 5, size=REGISTRES)]
     dates = [random_date(DATELOW, DATEHIGH) for i in range(REGISTRES)]
-    comments = [ choice(GOODCOMMENTS) if x > 3.9 else choice(MEDCOMMENTS) if x > 2.9 else choice(BADCOMMENTS) for x in rating ]
+    comments = [ choice(GOODCOMMENTS) if x > 3.5 else choice(MEDCOMMENTS) if x > 2.5 else choice(BADCOMMENTS) for x in rating ]
 
     moviesFinal = DataFrame(
         {
@@ -74,7 +99,7 @@ async def generate_random_samples():
         }
     )
 
-    return moviesFinal.to_json(orient = 'records')
+    return moviesFinal.to_dict(orient = 'records')
 
 if __name__ == '__main__':
     uvicorn.run(app, host="localhost", port=5000)
