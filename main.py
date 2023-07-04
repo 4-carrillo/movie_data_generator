@@ -81,11 +81,11 @@ async def generate_random_samples() -> List[dataOut]:
     moviesRandom = movies.sample(n = REGISTRES, replace = True)
     moviesRandom = moviesRandom[['title', 'genres']]
 
-    users = randint(10, 50, size=REGISTRES)
+    users = randint(80, 100, size=REGISTRES)
     ages = randint(18, 60, size=REGISTRES)
     rating = [round(x,1) for x in uniform(1, 5, size=REGISTRES)]
     dates = [random_date(DATELOW, DATEHIGH) for i in range(REGISTRES)]
-    comments = [ choice(GOODCOMMENTS) if x > 3.5 else choice(MEDCOMMENTS) if x > 2.5 else choice(BADCOMMENTS) for x in rating ]
+    comments = [ choice(GOODCOMMENTS) if x > 3.9 else choice(MEDCOMMENTS) if x > 2.9 else choice(BADCOMMENTS) for x in rating ]
 
     moviesFinal = DataFrame(
         {

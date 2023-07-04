@@ -19,7 +19,7 @@ COL_LIST=[
     'date'
 ]
 
-REGISTRES=randint(3000, 9000, size=1)[0]
+REGISTRES=randint(8000, 9000, size=1)[0]
 
 DATELOW = "1/1/2015 1:30 PM"
 DATEHIGH = "1/1/2023 4:50 AM"
