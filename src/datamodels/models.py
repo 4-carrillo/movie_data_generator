@@ -3,12 +3,12 @@ from pydantic import Field
 
 
 class dataOut(BaseModel):
-    userid: float = Field(
+    userid: int = Field(
                     42,
                     title='User ID',
                     description='User ID'
                 )
-    age: float = Field(
+    age: int = Field(
                     25,
                     title='User Age',
                     description='User Age'

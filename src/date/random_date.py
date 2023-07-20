@@ -1,5 +1,10 @@
-import random
-import time
+from random import random
+from time import (
+    mktime,
+    strftime,
+    strptime,
+    localtime
+)
     
 def str_time_prop(start, end, time_format, prop):
     """Get a time at a proportion of a range of two formatted times.
@@ -10,13 +15,13 @@ def str_time_prop(start, end, time_format, prop):
     start.  The returned time will be in the specified format.
     """
 
-    stime = time.mktime(time.strptime(start, time_format))
-    etime = time.mktime(time.strptime(end, time_format))
+    stime = mktime(strptime(start, time_format))
+    etime = mktime(strptime(end, time_format))
 
     ptime = stime + prop * (etime - stime)
 
-    return time.strftime(time_format, time.localtime(ptime))
+    return strftime(time_format, localtime(ptime))
 
 
 def random_date(start, end):
-    return str_time_prop(start, end, '%m/%d/%Y %I:%M %p', random.random())
+    return str_time_prop(start, end, '%m/%d/%Y %I:%M %p', random())
