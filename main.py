@@ -18,9 +18,8 @@ from pandas import (
     DataFrame,
     read_csv
 )
-from src.date.random_date import(
-    random_date
-)
+from src.user.generate_users import generate_user
+from src.user.calculate_age import age_by_year
 from src.datamodels.models import dataOut
 #from pydantic import Json
 from typing import List
@@ -81,21 +80,22 @@ async def generate_random_samples() -> List[dataOut]:
     moviesRandom = movies.sample(n = REGISTRES, replace = True)
     moviesRandom = moviesRandom[['title', 'genres']]
 
-    users = randint(80, 100, size=REGISTRES)
-    ages = randint(18, 60, size=REGISTRES)
+    users = generate_user()
+    userNew =  age_by_year(users)
+
     rating = [round(x,1) for x in uniform(1, 5, size=REGISTRES)]
-    dates = [random_date(DATELOW, DATEHIGH) for i in range(REGISTRES)]
     comments = [ choice(GOODCOMMENTS) if x > 3.9 else choice(MEDCOMMENTS) if x > 2.9 else choice(BADCOMMENTS) for x in rating ]
 
     moviesFinal = DataFrame(
         {
-            COL_LIST[0]: users,
-            COL_LIST[1]: ages,
+            COL_LIST[0]: userNew['users'].tolist(),
+            'signup_age': userNew['signup_age'].tolist(),
+            COL_LIST[1]: userNew['ages'].tolist(),
             COL_LIST[2]: moviesRandom['title'].tolist(),
             COL_LIST[3]: moviesRandom['genres'].tolist(),
             COL_LIST[4]: rating,
             COL_LIST[5]: comments,
-            COL_LIST[6]: dates
+            COL_LIST[6]: userNew['dates'].tolist()
         }
     )
 
